@@ -1,6 +1,6 @@
 module my_and(
     input wire a, b,
-    output wire c
+    output wire c;
 );
-assign c = a & b;
+assign c = a & b
 endmodule
