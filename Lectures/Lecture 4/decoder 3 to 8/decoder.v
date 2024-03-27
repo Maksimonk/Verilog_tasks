@@ -4,7 +4,7 @@
 // the remaining digits are zero
 
 module decoder(
-    input reg [2:0] N,
+    input [2:0] N,
     output [7:0] output_vector
 );
 assign output_vector = 8'b1 << N;

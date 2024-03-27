@@ -7,6 +7,8 @@ module testbench();
     wire [7:0] result;
 initial begin
     N_test = 3'b000;
+end
+always begin
     #1 N_test =3'b001;
     #1 N_test =3'b010;
     #1 N_test =3'b011;
