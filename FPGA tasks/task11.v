@@ -7,24 +7,36 @@ module task11 (
 );
 
 reg [3:0] hex;
-reg but_r;
-reg but_rr;
-assign push = but_rr&(~but_r); // нажатие кнопки
-
-
-
+reg but_r_inc;
+reg but_rr_inc;
+reg but_r_dec;
+reg but_rr_dec;
+assign push_inc = (~but_rr_inc)&(but_r_inc); // нажатие кнопки увеличения
+assign push_dec = (~but_rr_dec)&(but_r_dec); // нажатие кнопки уменьшения
 
 always @(posedge clk) begin
-    but_r <= ~(increment_button & decrement_button); // исключение двойного нажатия
-    but_rr <= but_r;
+    but_r_inc <= increment_button;
+    but_rr_inc <= but_r_inc;
+	 
+	 but_r_dec <= decrement_button;
+    but_rr_dec <= but_r_dec;
 
     if (reset == 0) begin
-        hex <= 1'h0;
+        hex <= 0;
     end
+	 else begin
 
-    if (push == 1) begin
-        hex <= ~increment_button ? hex + 1 : decrement_button ? hex - 1 : hex;
+    if (push_inc == 1) begin
+		if (hex < 4'd9) begin
+				hex <= hex + 1;
+		end
+		else   hex <= 0;
     end
+	 
+	 if (push_dec == 1) begin
+        hex <= hex - 1;
+    end
+	 end
 end
 
 assign seven_segment =  {7{hex == 0}} & ~7'b0111111 |
