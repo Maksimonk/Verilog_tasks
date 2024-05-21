@@ -20,19 +20,29 @@ always @(posedge clk) begin
     but_r_left <= to_left_button;
     but_rr_left <= but_r_left;
 	 
-	 but_r_right <= to_right_button;
+	but_r_right <= to_right_button;
     but_rr_right <= but_r_right;
 
     if (~reset) begin
         values <= 0;
     end
-	 else if (push_left) begin
+
+	/*
+      else if (push_left) begin
 		values <= values << 1;
         values [0] <= switch1;
     end
 	 else if (push_right) begin
         values <= values >> 1;
         values [7] <= switch0;
+    end 
+    */
+
+    else if (push_left) begin
+		values <= {{values[6:0]}, switch0};
+    end
+	 else if (push_right) begin
+		values <= {switch1, {values[7:1]}};
     end
 	 
 end
