@@ -43,7 +43,8 @@ assign LEDS =  (counter == 0) ? 8'b00000000 :
                (counter == 5) ? 8'b00011111 :
                (counter == 6) ? 8'b00111111 :
                (counter == 7) ? 8'b01111111 : 8'b11111111 ;
-*/               
+*/    
+/*           
 assign LEDS =  (counter == 0) ? 8'b00000000 :
                (counter == 1) ? 8'b00000001 :
                (counter == 2) ? 8'b00000010 :
@@ -52,5 +53,12 @@ assign LEDS =  (counter == 0) ? 8'b00000000 :
                (counter == 5) ? 8'b00010000 :
                (counter == 6) ? 8'b00100000 :
                (counter == 7) ? 8'b01000000 : 8'b10000000 ;
+*/
+
+genvar Gi;
+generate for (Gi = 0; Gi < 8; Gi = Gi + 1) begin: loop
+    assign LEDS[Gi] = (counter == Gi);
+end
+endgenerate
 
 endmodule
