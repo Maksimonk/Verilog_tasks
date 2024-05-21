@@ -1,0 +1,41 @@
+module task2 (
+    input clk,
+    input reset, // KEY0
+    input SW0, // SW0
+    input SW1, // SW1
+    input SW2, // SW2
+    input SW3, // SW3
+    input SW4, // SW4
+    input SW5, // SW5
+    input SW6, // SW6
+    input SW7, // SW7
+    input record_button, // KEY 1
+    output reg [7:0] LEDS_R,
+    output reg [7:0] LEDS_G
+);
+
+wire [7:0] switches;
+assign switches = [SW0, SW1, SW2, SW3, SW4, SW5, SW6, SW7]
+
+
+reg but_r_record;
+reg but_rr_record;
+assign push_record = (~but_rr_record)&(but_r_record); // push record button
+
+
+always @(posedge clk) begin
+    but_r_record <= record_button;
+    but_rr_record <= but_r_record;
+	 
+    if (~reset) begin
+        LEDS_R <= 0;
+    end
+	else if (push_record) begin
+        genvar Gi;
+        generate for (Gi = 0; Gi < 8; Gi = Gi + 1) begin: loop
+        assign LEDS_R[Gi] = switches[Gi];
+        end
+        endgenerate
+    end
+end
+endmodule
